@@ -55,17 +55,24 @@ export function IndiaMap() {
       // Clear any existing map
       mapRef.current!.innerHTML = '';
 
-      // Create the map
+      // Create the map with proper India bounds
       const map = L.map(mapRef.current!, {
-        center: [20.5937, 78.9629],
+        center: [20.5937, 78.9629], // Center of India
         zoom: 5,
-        zoomControl: true
+        zoomControl: true,
+        maxBounds: [[6.4627, 68.1097], [35.5132, 97.3953]], // India bounds
+        maxBoundsViscosity: 1.0
       });
 
-      // Add OpenStreetMap tiles
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      // Add CartoDB Positron tiles for better contrast
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 19
       }).addTo(map);
+
+      // Ensure map focuses on India after load
+      map.fitBounds([[6.4627, 68.1097], [35.5132, 97.3953]], { padding: [20, 20] });
 
       // Add plantation markers
       plantations.forEach(plantation => {
