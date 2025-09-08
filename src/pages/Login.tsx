@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Leaf, Lock, Mail } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Login() {
@@ -13,28 +14,28 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { login } = useAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    // Simulate authentication
-    setTimeout(() => {
-      if (email && password) {
-        toast({
-          title: "Login Successful",
-          description: "Welcome to Blue Carbon Registry Dashboard",
-        });
-        navigate("/dashboard");
-      } else {
-        toast({
-          title: "Login Failed",
-          description: "Please enter valid credentials",
-          variant: "destructive",
-        });
-      }
-      setLoading(false);
-    }, 1000);
+    const success = await login(email, password);
+    
+    if (success) {
+      toast({
+        title: "Login Successful",
+        description: "Welcome to Blue Carbon Registry Dashboard",
+      });
+      navigate("/dashboard");
+    } else {
+      toast({
+        title: "Login Failed",
+        description: "Please enter valid credentials",
+        variant: "destructive",
+      });
+    }
+    setLoading(false);
   };
 
   return (

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { 
@@ -12,7 +13,10 @@ import {
   Database,
   Users,
   BarChart3,
-  Leaf
+  Leaf,
+  Sun,
+  Moon,
+  Monitor
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -22,9 +26,35 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/contexts/AuthContext";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const { logout, user } = useAuth();
+  const { theme, setTheme } = useTheme();
+
+  const handleNavigation = (path: string) => {
+    navigate(path);
+    setIsMobileMenuOpen(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
+  const getThemeIcon = () => {
+    switch (theme) {
+      case 'light':
+        return <Sun className="w-4 h-4" />;
+      case 'dark':
+        return <Moon className="w-4 h-4" />;
+      default:
+        return <Monitor className="w-4 h-4" />;
+    }
+  };
 
   return (
     <nav className="bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60 border-b border-border shadow-sm sticky top-0 z-50">
@@ -45,19 +75,39 @@ export function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
-            <Button variant="ghost" size="sm" className="gap-2">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="gap-2"
+              onClick={() => handleNavigation('/dashboard')}
+            >
               <BarChart3 className="w-4 h-4" />
               Dashboard
             </Button>
-            <Button variant="ghost" size="sm" className="gap-2">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="gap-2"
+              onClick={() => handleNavigation('/registry')}
+            >
               <Database className="w-4 h-4" />
               Registry
             </Button>
-            <Button variant="ghost" size="sm" className="gap-2">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="gap-2"
+              onClick={() => handleNavigation('/ngos')}
+            >
               <Users className="w-4 h-4" />
               NGOs
             </Button>
-            <Button variant="ghost" size="sm" className="gap-2">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="gap-2"
+              onClick={() => handleNavigation('/verification')}
+            >
               <Shield className="w-4 h-4" />
               Verification
             </Button>
@@ -65,6 +115,28 @@ export function Navbar() {
 
           {/* Right side actions */}
           <div className="flex items-center gap-3">
+            {/* Theme Toggle */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm">
+                  {getThemeIcon()}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => setTheme('light')} className="gap-2">
+                  <Sun className="w-4 h-4" />
+                  Light
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme('dark')} className="gap-2">
+                  <Moon className="w-4 h-4" />
+                  Dark
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme('system')} className="gap-2">
+                  <Monitor className="w-4 h-4" />
+                  System
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             {/* Notifications */}
             <Button variant="ghost" size="sm" className="relative">
               <Bell className="w-4 h-4" />
@@ -92,8 +164,8 @@ export function Navbar() {
               <DropdownMenuContent align="end" className="w-56">
                 <DropdownMenuLabel>
                   <div>
-                    <p className="font-medium">Administrator</p>
-                    <p className="text-xs text-muted-foreground">admin@bluecarbon.gov.in</p>
+                    <p className="font-medium">{user?.name || 'Administrator'}</p>
+                    <p className="text-xs text-muted-foreground">{user?.email || 'admin@bluecarbon.gov.in'}</p>
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
@@ -106,7 +178,7 @@ export function Navbar() {
                   Security
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="gap-2 text-destructive">
+                <DropdownMenuItem className="gap-2 text-destructive" onClick={handleLogout}>
                   <LogOut className="w-4 h-4" />
                   Sign Out
                 </DropdownMenuItem>
@@ -129,19 +201,39 @@ export function Navbar() {
         {isMobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-border">
             <div className="flex flex-col gap-2">
-              <Button variant="ghost" size="sm" className="justify-start gap-2">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="justify-start gap-2"
+                onClick={() => handleNavigation('/dashboard')}
+              >
                 <BarChart3 className="w-4 h-4" />
                 Dashboard
               </Button>
-              <Button variant="ghost" size="sm" className="justify-start gap-2">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="justify-start gap-2"
+                onClick={() => handleNavigation('/registry')}
+              >
                 <Database className="w-4 h-4" />
                 Registry
               </Button>
-              <Button variant="ghost" size="sm" className="justify-start gap-2">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="justify-start gap-2"
+                onClick={() => handleNavigation('/ngos')}
+              >
                 <Users className="w-4 h-4" />
                 NGOs
               </Button>
-              <Button variant="ghost" size="sm" className="justify-start gap-2">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="justify-start gap-2"
+                onClick={() => handleNavigation('/verification')}
+              >
                 <Shield className="w-4 h-4" />
                 Verification
               </Button>
