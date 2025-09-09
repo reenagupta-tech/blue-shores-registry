@@ -16,7 +16,8 @@ import {
   Leaf,
   Sun,
   Moon,
-  Monitor
+  Monitor,
+  TreePine
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -83,6 +84,15 @@ export function Navbar() {
             >
               <BarChart3 className="w-4 h-4" />
               Dashboard
+            </Button>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="gap-2"
+              onClick={() => handleNavigation('/plantations')}
+            >
+              <TreePine className="w-4 h-4" />
+              Plantations
             </Button>
             <Button 
               variant="ghost" 
@@ -209,6 +219,15 @@ export function Navbar() {
               >
                 <BarChart3 className="w-4 h-4" />
                 Dashboard
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="justify-start gap-2"
+                onClick={() => handleNavigation('/plantations')}
+              >
+                <TreePine className="w-4 h-4" />
+                Plantations
               </Button>
               <Button 
                 variant="ghost" 

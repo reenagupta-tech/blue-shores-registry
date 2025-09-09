@@ -10,6 +10,7 @@ import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import DashboardPage from "./pages/DashboardPage";
+import Plantations from "./pages/Plantations";
 import Registry from "./pages/Registry";
 import NGOs from "./pages/NGOs";
 import Verification from "./pages/Verification";
@@ -34,6 +35,14 @@ const App = () => (
                 element={
                   <ProtectedRoute>
                     <DashboardPage />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/plantations" 
+                element={
+                  <ProtectedRoute>
+                    <Plantations />
                   </ProtectedRoute>
                 } 
               />

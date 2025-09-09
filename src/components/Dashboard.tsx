@@ -12,7 +12,7 @@ import {
   XCircle,
   Eye
 } from "lucide-react";
-import { IndiaMap } from "./IndiaMap";
+
 import { AnalyticsCharts } from "./AnalyticsCharts";
 import { Navbar } from "./Navbar";
 import { SystemMetrics } from "./SystemMetrics";
@@ -172,10 +172,10 @@ export function Dashboard() {
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6">
           {/* Pending Requests Table */}
-          <div className="lg:col-span-1">
-            <Card className="shadow-card border-0 h-fit">
+          <div>
+            <Card className="shadow-card border-0">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <MapPin className="h-5 w-5 text-primary" />
@@ -183,7 +183,7 @@ export function Dashboard() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4 max-h-96 overflow-y-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                   {requests.map((request) => (
                     <div key={request.id} className="border border-border rounded-lg p-4 space-y-3">
                       <div>
@@ -218,21 +218,6 @@ export function Dashboard() {
                     </div>
                   ))}
                 </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Interactive Map */}
-          <div className="lg:col-span-2">
-            <Card className="shadow-card border-0">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <MapPin className="h-5 w-5 text-secondary" />
-                  Plantation Locations
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-0">
-                <IndiaMap />
               </CardContent>
             </Card>
           </div>
