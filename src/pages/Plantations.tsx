@@ -200,7 +200,7 @@ export default function Plantations() {
       {/* Header */}
       <div className="max-w-7xl mx-auto p-6">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent mb-2">
+          <h1 className="text-4xl font-bold text-foreground mb-2">
             Blue Shores Plantation Registry
           </h1>
           <p className="text-muted-foreground text-lg">

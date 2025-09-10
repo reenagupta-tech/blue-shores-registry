@@ -17,6 +17,7 @@ import { AnalyticsCharts } from "./AnalyticsCharts";
 import { Navbar } from "./Navbar";
 import { SystemMetrics } from "./SystemMetrics";
 import { RecentActivity } from "./RecentActivity";
+import { ViewImagesModal } from "./ViewImagesModal";
 
 // Dummy data for the dashboard
 const kpiData = {
@@ -67,6 +68,14 @@ const pendingRequests = [
 
 export function Dashboard() {
   const [requests, setRequests] = useState(pendingRequests);
+  const [viewImagesModal, setViewImagesModal] = useState<{
+    isOpen: boolean;
+    requestData: typeof pendingRequests[0] | null;
+  }>({ isOpen: false, requestData: null });
+
+  const handleViewImages = (request: typeof pendingRequests[0]) => {
+    setViewImagesModal({ isOpen: true, requestData: request });
+  };
 
   const handleApprove = (id: number) => {
     setRequests(prev => prev.filter(req => req.id !== id));
@@ -83,7 +92,7 @@ export function Dashboard() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            <h1 className="text-4xl font-bold text-foreground">
               Blue Carbon Registry
             </h1>
             <p className="text-muted-foreground mt-2">
@@ -193,7 +202,11 @@ export function Dashboard() {
                       </div>
                       
                       <div className="flex items-center justify-between">
-                        <Badge variant="outline" className="text-xs">
+                        <Badge 
+                          variant="outline" 
+                          className="text-xs cursor-pointer hover:bg-accent"
+                          onClick={() => handleViewImages(request)}
+                        >
                           <Eye className="h-3 w-3 mr-1" />
                           {request.photos} photos
                         </Badge>
@@ -239,6 +252,15 @@ export function Dashboard() {
           </div>
         </div>
       </div>
+
+      {/* View Images Modal */}
+      {viewImagesModal.requestData && (
+        <ViewImagesModal
+          isOpen={viewImagesModal.isOpen}
+          onClose={() => setViewImagesModal({ isOpen: false, requestData: null })}
+          requestData={viewImagesModal.requestData}
+        />
+      )}
     </div>
   );
 }
