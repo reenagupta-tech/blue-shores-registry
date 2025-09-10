@@ -67,7 +67,7 @@ export function Navbar() {
               <Leaf className="w-5 h-5 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-lg font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              <h1 className="text-lg font-bold text-foreground">
                 Blue Carbon Registry
               </h1>
               <p className="text-xs text-muted-foreground">MRV Admin Portal</p>

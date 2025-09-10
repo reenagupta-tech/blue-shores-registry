@@ -93,7 +93,7 @@ export function Dashboard() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-4xl font-bold text-foreground">
-              Blue Carbon Registry
+              Blue Carbon Dashboard
             </h1>
             <p className="text-muted-foreground mt-2">
               Monitoring, Reporting & Verification Dashboard
